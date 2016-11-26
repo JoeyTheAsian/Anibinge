@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Blizzard oAuth</title>
+  <meta charset="utf-8"/>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #search {
+      width: 10%;
+      margin: 0 auto;
+      padding: 50px;
+      text-align: center;
+    }
+    
+    form {
+      margin-top: 10px;
+    }
+    
+    input[type="text"] {
+      padding-left: 10%;
+    }
+    
+    #result {
+      width: 40%;
+      margin: 0 auto;
+      word-break: break-all;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      
+      $("#wowCharForm").submit(function(e){
+        var action = $("#wowCharForm").attr("action");
+        var realm = encodeURIComponent($("#realmName").val());
+        var character = encodeURIComponent($("#characterName").val());
+        
+        var data = "realm=" + realm + "&character=" + character;
+    
+        $.ajax({
+          cache: false,
+          type: "get",
+          url: action,
+          data: data,
+          dataType: "json",
+          success: (result, status, xhr) => {
+            //convert to string we can see on screen
+            var resultText = JSON.stringify(result);
+            $("#result").text(resultText);
+          },
+          error: (xhr, status, error) => {
+            var resultText = JSON.stringify(xhr);
+            $("#result").text(resultText);
+          }
+        });
+        
+        
+        e.preventDefault();
+        return false;
+      });
+      
+      $("#wowGuildForm").submit(function(e){
+        var action = $("#wowGuildForm").attr("action");
+        var realm = encodeURIComponent($("#guildRealmName").val());
+        var guild = encodeURIComponent($("#guildName").val());
+        
+        var data = "realm=" + realm + "&guild=" + guild;
+        
+        $.ajax({
+          cache: false,
+          type: "get",
+          url: action,
+          data: data,
+          dataType: "json",
+          success: (result, status, xhr) => {
+            //convert to string we can see on screen
+            var resultText = JSON.stringify(result);
+            $("#result").text(resultText);
+          },
+          error: (xhr, status, error) => {
+            var resultText = JSON.stringify(xhr);
+            $("#result").text(resultText);
+          }
+        });
+        
+        
+        e.preventDefault();
+        return false;
+      });
+      
+    });
+  </script>
+</head>
+<body>
+  <div id="search">
+    <h2>World of Warcraft Search</h2>
+    <p>Please note this uses the full Blizzard API, not just WoW. This can support WoW, SC2 &amp; D3. See more 
+      <a href="https://github.com/benweier/blizzard.js/blob/master/API.md">Here</a>
+    </p>
+    <form id="wowCharForm" action="/wowChar" method="get">
+      <input id="realmName" type="text" name="realm" placeholder="realm name">
+      <input id="characterName" type="text" name="character" placeholder="character name">
+      <input type="submit" value="Look Up Character">
+    </form>
+    <form id="wowGuildForm" action="/wowGuild" method="get">
+      <input id="guildRealmName" type="text" name="realm" placeholder="realm name">
+      <input id="guildName" type="text" name="guild" placeholder="guild name">
+      <input type="submit" value="Look Up Guild">
+    </form>
+  </div>
+  <div id="result">
+    
+  </div>
+</body>
+</html>

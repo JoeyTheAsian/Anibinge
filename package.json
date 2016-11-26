@@ -1,0 +1,15 @@
+{
+  "name": "oauth-example",
+  "version": "1.0.0",
+  "description": "A small example using oAuth and Passportjs",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "test": "echo \"No Tests\""
+  },
+  "author": "Cody Van De Mark",
+  "license": "ISC",
+  "dependencies": {
+    "blizzard.js": "^1.6.0"
+  }
+}
