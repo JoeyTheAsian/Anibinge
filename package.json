@@ -7,7 +7,7 @@
     "start": "node ./src/server.js",
     "test": "echo \"No Tests\""
   },
-  "author": "Cody Van De Mark",
+  "author": "Joey Tong",
   "license": "ISC",
   "dependencies": {
     "nani": "^1.2.0"

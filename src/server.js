@@ -124,7 +124,7 @@ function characterSearch(req, res, params) {
     //we will send back json. We are assuming this
     //is an ajax request and they want json back
     res.writeHead(200, { "Content-Type" : "application/json"});
-    //on success write the data returned from the anilist
+    //on success write the data returned from the anilistgit push -u origin master
     //servers to our client response
     //We need to stringify the json to make it valid for HTTP
     res.write(JSON.stringify(data));
