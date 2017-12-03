@@ -10,7 +10,7 @@ var query = require('querystring');
 var fs = require('fs');
 //downloaded module for accessing the anilist API
 //https://github.com/sotojuan/nani
-var nani = require('nani').init("api_id", "api_secret");
+var nani = require('nani').init("joeytheasian-myw6o", "hzZ3Y349TAE10suXKgt7LBcKc");
 
 //read in our html file to serve back
 var index = fs.readFileSync(__dirname + "/../client/index.html");

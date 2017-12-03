@@ -36,7 +36,6 @@
   <script>
     //jquery ready function (similar to window.onload)
     $(document).ready(function() {
-      
       //have jquery listen for the searchForm's submit event
       $("#searchForm").submit(function(e){
         //grab the forms action attribute so we know where to submit to
@@ -48,12 +47,6 @@
         var term = encodeURIComponent($("#searchTerm").val());
         
         //create the query string to send to the server
-        //Here are building it manually, but jquery's serialize function
-        //will do this for you if desired. 
-        //We build it manually as example so we can see what it looks like. 
-        //We want the server to receive a term variable set to a value.
-        //That means term=value should be the string we send.
-        //We can build that manually like this.
         var data = "term=" + term;
     
         //using jquery's ajax function
@@ -104,12 +97,11 @@
       
       /********* see comments for searchForm **********/
       $("#characterForm").submit(function(e){
-        /********* see comments for searchForm **********/
         var action = $("#characterForm").attr("action");
         var character = encodeURIComponent($("#characterName").val());
         
         var data = "character=" + character;
-        
+        console.dir(action);
         $.ajax({
           cache: false,
           type: "get",
@@ -129,7 +121,6 @@
         });
         
         //NEED TO CANCEL THE BROWSER'S DEFAULT FORM ACTION
-        //e.preventDefault will stop it from doing the request
         e.preventDefault();
         //return false will stop it from trying to change page
         //to the action URL.
