@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Blizzard oAuth</title>
+  <title>Anilist Anime Search</title>
   <meta charset="utf-8"/>
   <style>
     html, body {
@@ -34,43 +34,81 @@
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script>
+    //jquery ready function (similar to window.onload)
     $(document).ready(function() {
       
-      $("#wowCharForm").submit(function(e){
-        var action = $("#wowCharForm").attr("action");
-        var realm = encodeURIComponent($("#realmName").val());
-        var character = encodeURIComponent($("#characterName").val());
+      //have jquery listen for the searchForm's submit event
+      $("#searchForm").submit(function(e){
+        //grab the forms action attribute so we know where to submit to
+        var action = $("#searchForm").attr("action");
+        //grab the search term value and encode it to be valid
+        //for queryParameters using the encodeURIComponent
+        //method. This will replace special characters (such as spaces) 
+        //with valid URL characters.
+        var term = encodeURIComponent($("#searchTerm").val());
         
-        var data = "realm=" + realm + "&character=" + character;
+        //create the query string to send to the server
+        //Here are building it manually, but jquery's serialize function
+        //will do this for you if desired. 
+        //We build it manually as example so we can see what it looks like. 
+        //We want the server to receive a term variable set to a value.
+        //That means term=value should be the string we send.
+        //We can build that manually like this.
+        var data = "term=" + term;
     
+        //using jquery's ajax function
         $.ajax({
+          //don't cache the results. Otherwise jquery won't submit again.
+          //It will think this is the same request and not run it a second time.
           cache: false,
-          type: "get",
+         //set our type to "get' so the server receives a GET request. We
+         //want to get data from an API, not upload data to the server.
+          type: "get", 
+          //set the url to our form's action url
           url: action,
+          //set data to the query string we built
           data: data,
+          //assume a JSON response from the server, so jquery knows how
+          //to parse the response.
           dataType: "json",
-          success: (result, status, xhr) => {
+          //on success from server
+          //Gets result as the server response
+          //status as the status code from the server
+          //and xhr as the xhr object it created behind the scenes
+          success: function (result, status, xhr) {
+            console.dir(result);
             //convert to string we can see on screen
             var resultText = JSON.stringify(result);
+            //add the raw json object to the screen for us to see.
             $("#result").text(resultText);
           },
-          error: (xhr, status, error) => {
-            var resultText = JSON.stringify(xhr);
+          //on error from server
+          //Gets error as the server response
+          //status as the status code from the server
+          //and xhr as the xhr object it created behind the scenes
+          error: function (error, status, xhr) {
+            //convert to string we can see on screen
+            var resultText = JSON.stringify(error);
+            //add the raw json object to the screen for us to see.
             $("#result").text(resultText);
           }
         });
         
-        
+        //NEED TO CANCEL THE BROWSER'S DEFAULT FORM ACTION
+        //e.preventDefault will stop it from doing the request
         e.preventDefault();
+        //return false will stop it from trying to change page
+        //to the action URL.
         return false;
       });
       
-      $("#wowGuildForm").submit(function(e){
-        var action = $("#wowGuildForm").attr("action");
-        var realm = encodeURIComponent($("#guildRealmName").val());
-        var guild = encodeURIComponent($("#guildName").val());
+      /********* see comments for searchForm **********/
+      $("#characterForm").submit(function(e){
+        /********* see comments for searchForm **********/
+        var action = $("#characterForm").attr("action");
+        var character = encodeURIComponent($("#characterName").val());
         
-        var data = "realm=" + realm + "&guild=" + guild;
+        var data = "character=" + character;
         
         $.ajax({
           cache: false,
@@ -78,19 +116,23 @@
           url: action,
           data: data,
           dataType: "json",
-          success: (result, status, xhr) => {
+          success: function (result, status, xhr) {
+            console.dir(result);
             //convert to string we can see on screen
             var resultText = JSON.stringify(result);
             $("#result").text(resultText);
           },
-          error: (xhr, status, error) => {
-            var resultText = JSON.stringify(xhr);
+          error: function (error, status, xhr) {
+            var resultText = JSON.stringify(error);
             $("#result").text(resultText);
           }
         });
         
-        
+        //NEED TO CANCEL THE BROWSER'S DEFAULT FORM ACTION
+        //e.preventDefault will stop it from doing the request
         e.preventDefault();
+        //return false will stop it from trying to change page
+        //to the action URL.
         return false;
       });
       
@@ -99,19 +141,46 @@
 </head>
 <body>
   <div id="search">
-    <h2>World of Warcraft Search</h2>
-    <p>Please note this uses the full Blizzard API, not just WoW. This can support WoW, SC2 &amp; D3. See more 
-      <a href="https://github.com/benweier/blizzard.js/blob/master/API.md">Here</a>
+    <h2>Anilist Anime Search</h2>
+    <p>
+      <a href="https://anilist-api.readthedocs.io/en/latest/index.html" target="_blank">API Link</a>
     </p>
-    <form id="wowCharForm" action="/wowChar" method="get">
-      <input id="realmName" type="text" name="realm" placeholder="realm name">
-      <input id="characterName" type="text" name="character" placeholder="character name">
-      <input type="submit" value="Look Up Character">
+    <!-- 
+      Forms are automatically submitted by the browser and will change page automatically.
+      We need to catch the submit event in JS and stop it from changing the page.
+      
+      A form has an action attribute - the page it send the data to. This will be a 
+      url received on the server-side with the data from this form.
+      
+      We are using a get method because we are trying to get data. We are passing
+      search parameters up, but we are trying to get data at the end of the day. 
+      
+      Any inputs in the form will send by NAME to the server. If you have an
+      input with the name attribute set to "term" and the user input value
+      "cats", then the server will receive the string term=cats. 
+      
+      Let's say you have two inputs, one with the name attribute "term" and the name
+      attribute "location". The user types in "cats" to the term attribute and "rochester"
+      to the location attribute. When the form submits to the action url, the server will
+      receive term=cats&location=rochester 
+      
+      If your input does not have a name field, then it will not submit with the form.
+      
+      Forms are submitted with the submit button or enter key 
+    -->
+    <form id="searchForm" action="/animeSearch" method="get">
+      <!-- since this has the name attribute set to "term" the server will receive
+           the string term=value (value being what the user typed in)
+      -->
+      <input id="searchTerm" type="text" name="term" placeholder="Search Term">
+      <input type="submit" value="Search">
     </form>
-    <form id="wowGuildForm" action="/wowGuild" method="get">
-      <input id="guildRealmName" type="text" name="realm" placeholder="realm name">
-      <input id="guildName" type="text" name="guild" placeholder="guild name">
-      <input type="submit" value="Look Up Guild">
+    <form id="characterForm" action="/character" method="get">
+      <!-- since this has the name attribute set to "character" the server will receive
+           the string character=value (value being what the user typed in)
+      -->
+      <input id="characterName" type="text" name="character" placeholder="Character Name">
+      <input type="submit" value="Search Character">
     </form>
   </div>
   <div id="result">

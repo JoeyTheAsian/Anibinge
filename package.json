@@ -10,6 +10,6 @@
   "author": "Cody Van De Mark",
   "license": "ISC",
   "dependencies": {
-    "blizzard.js": "^1.6.0"
+    "nani": "^1.2.0"
   }
 }
