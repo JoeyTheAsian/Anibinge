@@ -69,8 +69,14 @@
           //status as the status code from the server
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
-            
             console.dir(result);
+            if(result.length > 1){
+                var text = '';
+                for(var i = 0; i < result.length ;i++){
+                    text += "Romaji title: " + result[i].title_romaji + "\nEnglish Title: " + result[i].title_english + '/n';
+                }
+                $("#result").text(text);
+            }
             //convert to string we can see on screen
             var resultText = JSON.stringify(result);
             
