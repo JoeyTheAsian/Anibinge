@@ -48,7 +48,7 @@
         
         //create the query string to send to the server
         var data = "term=" + term;
-    
+        var gotAnime = false;
         //using jquery's ajax function
         $.ajax({
           //don't cache the results. Otherwise jquery won't submit again.
@@ -69,11 +69,13 @@
           //status as the status code from the server
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
+            
             console.dir(result);
             //convert to string we can see on screen
             var resultText = JSON.stringify(result);
+            
             //add the raw json object to the screen for us to see.
-            $("#result").text(resultText);
+            //$("#result").text(resultText);
           },
           //on error from server
           //Gets error as the server response

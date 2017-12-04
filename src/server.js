@@ -53,7 +53,7 @@ function onRequest(req, res) {
 //function to do an anime search to the anilist API for us
 function animeSearch(req, res, params) {
   //the nani call
-  nani.get('anime/search/' + params.term)
+  nani.get('anime/search/' + params.term + "/full-page")
   .then(function(data) {
     //set status to 200 (okay) for success
     //set content-type to application/json since
