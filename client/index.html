@@ -73,12 +73,15 @@
             if(result.length == 1 && !result.error.status){
                 
             }else if(result.length > 1){
-                $("#result").text("Which one of these are you watching?");
+                var header = document.createElement("h1");
+                header.textContent = "Which one of these are you watching?";
+                $("#result").append(header);
                 $("#result").append(document.createElement("br"));
                 var ind = '    ';
                 
                 for(var i = 0; i < result.length ;i++){
                     var div = document.createElement("div");
+                    div.id = "entry" + i;
                     var text = document.createElement("p");
                     if(result[i].title_romaji == result[i].title_english){
                         text.textContent = ind +"Title: " + result[i].title_romaji;
@@ -96,6 +99,9 @@
                     }
                     $("#result").append(div);
                     $("#result").append(document.createElement("br"));
+                    document.querySelector("entry" + i).onclick = function(){
+                        result.text(document.querySelector("entry" + i));
+                    }
                 }
 
             }else if(result.error.status == 200){
