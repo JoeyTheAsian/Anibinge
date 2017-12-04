@@ -71,15 +71,22 @@
           success: function (result, status, xhr) {
             console.dir(result);
             if(result.length > 1){
-                var text = '';
+                $("#result").text("Which one of these are you watching?");
+                $("#result").append(document.createElement("br"));
                 var ind = '    ';
                 for(var i = 0; i < result.length ;i++){
-                    text += "Romaji title: " + result[i].title_romaji + "<br>English Title: " + result[i].title_english + '<br>';
+                    var text = document.createElement("p");
+                    text.textContent = ind +"Romaji title: " + result[i].title_romaji;
+                    $("#result").append(text);
+                    $("#result").append(document.createElement("br"));
+                    text.textContent = ind + "English Title: " + result[i].title_english;
+                    $("#result").append(text);
                 }
-                $("#result").text("Which one of these are you watching? <br>" + text);
+                 $("#result").append(document.createElement("br"));
+                 $("#result").append(document.createElement("br"));
             }if(result.error.status == 200){
                 console.dir('error');
-                $("result").text = "I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms."
+                $("result").text("I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms.");
             }
             //convert to string we can see on screen
             //var resultText = JSON.stringify(result);
