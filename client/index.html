@@ -76,8 +76,9 @@
                 $("#result").text("Which one of these are you watching?");
                 $("#result").append(document.createElement("br"));
                 var ind = '    ';
-                var div = document.createElement("div");
+                
                 for(var i = 0; i < result.length ;i++){
+                    var div = document.createElement("div");
                     var text = document.createElement("p");
                     if(result[i].title_romaji == result[i].title_english){
                         text.textContent = ind +"Title: " + result[i].title_romaji;
