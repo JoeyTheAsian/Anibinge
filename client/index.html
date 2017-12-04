@@ -77,7 +77,7 @@
                     text += "Romaji title: " + result[i].title_romaji + "<br>English Title: " + result[i].title_english + '<br>';
                 }
                 $("#result").text("Which one of these are you watching? <br>" + text);
-            }if(result.error == "No Results."){
+            }if(result.error.status == 200){
                 $("result").text = "I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms."
             }
             //convert to string we can see on screen
