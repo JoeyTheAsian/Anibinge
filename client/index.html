@@ -114,11 +114,15 @@
                 for(var i = 0; i < result.length ;i++){
                     var div = document.createElement("div");
                     div.id = "entry" + i;
-                    div.style = "background-color: #cecece; padding: 5px;"
+                    div.style = "background-color: #cecece; align-content:center; text-align:center; width: 120px; height:250px; display:inline-block;text-shadow:2px 2px #FFFFFF;"
                     var text = document.createElement("p");
+                    var image = document.createElement("img");
                     if(result[i].title_romaji == result[i].title_english){
-                        text.textContent = "Title: " + result[i].title_romaji;
+                        text.textContent = result[i].title_romaji;
+                        image.src = result[i].image_url_med;
+                        
                         div.appendChild(text);
+                        div.appendChild(image);
                         
                     }else{
                         text.textContent = "Romaji Title: " + result[i].title_romaji;
@@ -130,7 +134,7 @@
                     }
                     
                     $("#result").append(div);
-                    $("#result").append(document.createElement("br"));
+                    //$("#result").append(document.createElement("br"));
                     document.getElementById(div.id).onclick = function(e){
                         $("#result").text("");
                         var header = document.createElement("h2");
