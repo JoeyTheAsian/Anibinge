@@ -9,6 +9,7 @@
       height: 100%;
       margin: 0;
       padding: 0;
+        word-wrap: normal;
     }
     
     #search {
@@ -102,7 +103,7 @@
                     document.getElementById(div.id).onclick = function(e){
                         $("#result").text("");
                         var header = document.createElement("h1");
-                        header.textContent = "Got it, you like this, right? "
+                        header.textContent = "Got it, you like this, right? " + 
                         $("#result").append(header);
                         $("#result").append(e.target);
                         var header1 = document.createElement("h1");
