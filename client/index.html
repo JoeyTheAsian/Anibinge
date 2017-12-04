@@ -73,7 +73,14 @@
           success: function (result, status, xhr) {
             console.dir(result);
             if(result.length == 1 && !result.error.status){
-                
+                $("#result").text("");
+                var header = document.createElement("h2");
+                header.textContent = "Got it, you like this, right? ";
+                $("#result").append(header);
+                $("#result").append(result[0]);
+                var header1 = document.createElement("h2");
+                header1.textContent = "We'll get you some similar anime to binge on right away."
+                $("#result").append(header1);
             }else if(result.length > 1){
                 var header = document.createElement("h1");
                 header.textContent = "Which one of these are you watching?";
