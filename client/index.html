@@ -100,7 +100,7 @@
                     $("#result").append(div);
                     $("#result").append(document.createElement("br"));
                     document.getElementById("entry" + i).onclick = function(){
-                        result.text(document.querySelector("entry" + i));
+                        $("#result").text(document.querySelector("entry" + i));
                     }
                 }
 
