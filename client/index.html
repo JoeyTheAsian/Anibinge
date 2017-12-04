@@ -72,15 +72,34 @@
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
             console.dir(result);
+              //if we only get one anime back
             if(result.length == 1 && !result.error){
                 $("#result").text("");
                 var header = document.createElement("h2");
-                header.textContent = "Got it, you like this, right? ";
+                header.textContent = "Got it, you're watching this, right? ";
+                //construct div with anime title and info
+                var div = document.createElement("div");
+                div.id = "entry" + 0;
+                var text = document.createElement("p");
+                if(result[0].title_romaji == result[0].title_english){
+                        text.textContent = ind +"Title: " + result[i].title_romaji;
+                        
+                }else{
+                    text.textContent = ind +"Romaji Title: " + result[i].title_romaji;
+                }
+                if(result[i].title_romaji != result[i].title_english){
+                    var text1 = document.createElement("p");
+                    text1.textContent = ind + "English Title: " + result[i].title_english;
+                    div.appendChild(text1);
+                    //$("#result").append(text1);
+                }
+                
                 $("#result").append(header);
-                $("#result").append(result[0]);
+                $("#result").append(div);
                 var header1 = document.createElement("h2");
                 header1.textContent = "We'll get you some similar anime to binge on right away."
                 $("#result").append(header1);
+            //if we get more than one anime back
             }else if(result.length > 1){
                 var header = document.createElement("h1");
                 header.textContent = "Which one of these are you watching?";
@@ -111,7 +130,7 @@
                     document.getElementById(div.id).onclick = function(e){
                         $("#result").text("");
                         var header = document.createElement("h2");
-                        header.textContent = "Got it, you like this, right? ";
+                        header.textContent = "Got it, you're watching this, right? ";
                         $("#result").append(header);
                         $("#result").append(e.target);
                         var header1 = document.createElement("h2");
