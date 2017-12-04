@@ -86,7 +86,7 @@
                  $("#result").append(document.createElement("br"));
             }if(result.error.status == 200){
                 console.dir('error');
-                $("result").text("I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms.");
+                $("#result").text("I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms.");
             }
             //convert to string we can see on screen
             //var resultText = JSON.stringify(result);
