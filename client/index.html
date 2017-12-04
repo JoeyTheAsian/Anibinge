@@ -72,12 +72,14 @@
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
             console.dir(result);
+            //indent
             var ind = '    ';
               //if we only get one anime back
             if(result.length == 1 && !result.error){
                 $("#result").text("");
                 var header = document.createElement("h2");
                 header.textContent = "Got it, you're watching this, right? ";
+                
                 //construct div with anime title and info
                 var div = document.createElement("div");
                 div.id = "entry" + 0;
@@ -93,11 +95,14 @@
                     div.appendChild(text1);
                 }
                 
+                //add to result
                 $("#result").append(header);
                 $("#result").append(div);
+                
                 var header1 = document.createElement("h2");
                 header1.textContent = "We'll get you some similar anime to binge on right away."
                 $("#result").append(header1);
+                
             //if we get more than one anime back
             }else if(result.length > 1){
                 var header = document.createElement("h1");
