@@ -82,14 +82,14 @@
                 div.id = "entry" + 0;
                 var text = document.createElement("p");
                 if(result[0].title_romaji == result[0].title_english){
-                        text.textContent = ind +"Title: " + result[i].title_romaji;
+                        text.textContent = ind +"Title: " + result[0].title_romaji;
                         
                 }else{
-                    text.textContent = ind +"Romaji Title: " + result[i].title_romaji;
+                    text.textContent = ind +"Romaji Title: " + result[0].title_romaji;
                 }
                 if(result[i].title_romaji != result[0].title_english){
                     var text1 = document.createElement("p");
-                    text1.textContent = ind + "English Title: " + result[i].title_english;
+                    text1.textContent = ind + "English Title: " + result[0].title_english;
                     div.appendChild(text1);
                     //$("#result").append(text1);
                 }
