@@ -77,8 +77,6 @@
                     text += "Romaji title: " + result[i].title_romaji + "<br>English Title: " + result[i].title_english + '<br>';
                 }
                 $("#result").text("Which one of these are you watching? <br>" + text);
-            }if(result.length == 0){
-                $("result").text = "I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms."
             }
             //convert to string we can see on screen
             var resultText = JSON.stringify(result);
@@ -95,6 +93,9 @@
             var resultText = JSON.stringify(error);
             //add the raw json object to the screen for us to see.
             $("#result").text(resultText);
+            if(error.message == "No Results."){
+                $("result").text = "I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms."
+            }
           }
         });
         
