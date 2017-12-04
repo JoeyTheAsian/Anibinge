@@ -80,13 +80,15 @@
                     var text = document.createElement("p");
                     text.textContent = ind +"Romaji title: " + result[i].title_romaji;
                     $("#result").append(text);
+                    if(result[i].title_romaji != result[i].title_english){
+                        var text1 = document.createElement("p");
+                        text1.textContent = ind + "English Title: " + result[i].title_english;
+                        $("#result").append(text1);
+                    }
+
                     $("#result").append(document.createElement("br"));
-                    var text1 = document.createElement("p");
-                    text1.textContent = ind + "English Title: " + result[i].title_english;
-                    $("#result").append(text1);
                 }
-                 $("#result").append(document.createElement("br"));
-                 $("#result").append(document.createElement("br"));
+
             }else if(result.error.status == 200){
                 console.dir('error');
                 $("#result").text("I'm sorry, I couldn't find the anime you are talking about.");
