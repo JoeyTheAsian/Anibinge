@@ -26,10 +26,7 @@
     input[type="text"] {
       padding-left: 10%;
     }
-    div{
-      background-color: #cecece;
-      margin: 5px;
-    }
+    
     #result {
       width: 60%;
       margin: 0 auto;
@@ -84,6 +81,7 @@
                 //construct div with anime title and info
                 var div = document.createElement("div");
                 div.id = "entry" + 0;
+                div.style = "background-color: #cecece;"
                 var text = document.createElement("p");
                 //if it has matching english & romaji titles
                 if(result[0].title_romaji == result[0].title_english){
@@ -115,6 +113,7 @@
                 for(var i = 0; i < result.length ;i++){
                     var div = document.createElement("div");
                     div.id = "entry" + i;
+                    div.style = "background-color: #cecece;"
                     var text = document.createElement("p");
                     if(result[i].title_romaji == result[i].title_english){
                         text.textContent = "Title: " + result[i].title_romaji;
