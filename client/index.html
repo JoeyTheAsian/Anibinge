@@ -76,21 +76,24 @@
                 $("#result").text("Which one of these are you watching?");
                 $("#result").append(document.createElement("br"));
                 var ind = '    ';
+                var div = document.createElement("div");
                 for(var i = 0; i < result.length ;i++){
                     var text = document.createElement("p");
                     if(result[i].title_romaji == result[i].title_english){
-                        text.textContent = ind +"Romaji title: " + result[i].title_romaji;
+                        text.textContent = ind +"Title: " + result[i].title_romaji;
                         
                     }else{
-                        text.textContent = ind +"Title: " + result[i].title_romaji;
+                        text.textContent = ind +"Romaji Title: " + result[i].title_romaji;
                     }
-                    $("#result").append(text);
+                    div.appendChild(text);
+                    //$("#result").append(text);
                     if(result[i].title_romaji != result[i].title_english){
                         var text1 = document.createElement("p");
                         text1.textContent = ind + "English Title: " + result[i].title_english;
-                        $("#result").append(text1);
+                        div.appendChild(text1);
+                        //$("#result").append(text1);
                     }
-
+                    $("#result").append(div);
                     $("#result").append(document.createElement("br"));
                 }
 
