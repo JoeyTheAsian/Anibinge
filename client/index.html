@@ -72,6 +72,7 @@
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
             console.dir(result);
+            var ind = '    ';
               //if we only get one anime back
             if(result.length == 1 && !result.error){
                 $("#result").text("");
@@ -103,21 +104,20 @@
                 header.textContent = "Which one of these are you watching?";
                 $("#result").append(header);
                 $("#result").append(document.createElement("br"));
-                var ind = '    ';
                 
                 for(var i = 0; i < result.length ;i++){
                     var div = document.createElement("div");
                     div.id = "entry" + i;
                     var text = document.createElement("p");
                     if(result[i].title_romaji == result[i].title_english){
-                        text.textContent = '    ' +"Title: " + result[i].title_romaji;
+                        text.textContent = ind +"Title: " + result[i].title_romaji;
                         div.appendChild(text);
                         
                     }else{
-                        text.textContent = '    ' +"Romaji Title: " + result[i].title_romaji;
+                        text.textContent = ind +"Romaji Title: " + result[i].title_romaji;
                         div.appendChild(text);
                         var text1 = document.createElement("p");
-                        text1.textContent = '    ' + "English Title: " + result[i].title_english;
+                        text1.textContent = ind + "English Title: " + result[i].title_english;
                         div.appendChild(text1);
                     }
                     
