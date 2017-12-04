@@ -72,7 +72,7 @@
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
             console.dir(result);
-            if(result.length == 1 && !result.error.status){
+            if(result.length == 1 && !result.error){
                 $("#result").text("");
                 var header = document.createElement("h2");
                 header.textContent = "Got it, you like this, right? ";
