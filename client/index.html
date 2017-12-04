@@ -110,19 +110,17 @@
                     div.id = "entry" + i;
                     var text = document.createElement("p");
                     if(result[i].title_romaji == result[i].title_english){
-                        text.textContent = ind +"Title: " + result[i].title_romaji;
+                        text.textContent = '    ' +"Title: " + result[i].title_romaji;
+                        div.appendChild(text);
                         
                     }else{
-                        text.textContent = ind +"Romaji Title: " + result[i].title_romaji;
-                    }
-                    div.appendChild(text);
-                    //$("#result").append(text);
-                    if(result[i].title_romaji != result[i].title_english){
+                        text.textContent = '    ' +"Romaji Title: " + result[i].title_romaji;
+                        div.appendChild(text);
                         var text1 = document.createElement("p");
-                        text1.textContent = ind + "English Title: " + result[i].title_english;
+                        text1.textContent = '    ' + "English Title: " + result[i].title_english;
                         div.appendChild(text1);
-                        //$("#result").append(text1);
                     }
+                    
                     $("#result").append(div);
                     $("#result").append(document.createElement("br"));
                     document.getElementById(div.id).onclick = function(e){
