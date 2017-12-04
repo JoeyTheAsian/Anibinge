@@ -70,7 +70,9 @@
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
             console.dir(result);
-            if(result.length > 1){
+            if(result.length == 1 && !result.error.status){
+                
+            }else if(result.length > 1){
                 $("#result").text("Which one of these are you watching?");
                 $("#result").append(document.createElement("br"));
                 var ind = '    ';
@@ -79,14 +81,16 @@
                     text.textContent = ind +"Romaji title: " + result[i].title_romaji;
                     $("#result").append(text);
                     $("#result").append(document.createElement("br"));
-                    text.textContent = ind + "English Title: " + result[i].title_english;
-                    $("#result").append(text);
+                    var text1 = document.createElement("p");
+                    text1.textContent = ind + "English Title: " + result[i].title_english;
+                    $("#result").append(text1);
                 }
                  $("#result").append(document.createElement("br"));
                  $("#result").append(document.createElement("br"));
-            }if(result.error.status == 200){
+            }else if(result.error.status == 200){
                 console.dir('error');
-                $("#result").text("I'm sorry, I couldn't find the anime you are talking about. Try checking the spelling or using different search terms.");
+                $("#result").text("I'm sorry, I couldn't find the anime you are talking about.");
+                $("#result").append("Try checking the spelling or using different search terms.");
             }
             //convert to string we can see on screen
             //var resultText = JSON.stringify(result);
