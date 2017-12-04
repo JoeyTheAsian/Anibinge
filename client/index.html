@@ -100,7 +100,11 @@
                     $("#result").append(div);
                     $("#result").append(document.createElement("br"));
                     document.getElementById("entry" + i).onclick = function(){
-                        $("#result").text(document.querySelector("entry" + i));
+                        $("#result").text("");
+                        var header = document.createElement("h1");
+                        header.textContent = "Got it, we'll get you some similar anime to binge on."
+                        $("#result").append(header);
+                        $("#result").append(document.querySelector("entry" + i));
                     }
                 }
 
