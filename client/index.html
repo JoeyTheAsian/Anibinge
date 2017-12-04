@@ -136,17 +136,19 @@
                         var header = document.createElement("h2");
                         header.textContent = "Got it, you're watching this, right? ";
                         $("#result").append(header);
+                        e.target.onclick = function(){};
                         $("#result").append(e.target);
                         var header1 = document.createElement("h2");
-                        header1.textContent = "We'll get you some similar anime to binge on right away."
+                        header1.textContent = "We'll get you some similar anime to binge on right away..."
                         $("#result").append(header1);
                     }
                 }
 
             }else if(result.error.status == 200){
                 console.dir('error');
-                $("#result").text("I'm sorry, I couldn't find the anime you are talking about.");
-                $("#result").append("Try checking the spelling or using different search terms.");
+                var header = document.createElement("h2");
+                header.textContent = "I'm sorry, I couldn't find the anime you are talking about.<br>Try checking the spelling or using different search terms."
+                $("#result").text(header);
             }
             //convert to string we can see on screen
             //var resultText = JSON.stringify(result);
