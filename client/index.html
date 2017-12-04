@@ -159,20 +159,21 @@
       
       Forms are submitted with the submit button or enter key 
     -->
+      <p>What are you watching now?</p>
     <form id="searchForm" action="/animeSearch" method="get">
       <!-- since this has the name attribute set to "term" the server will receive
            the string term=value (value being what the user typed in)
       -->
-      <input id="searchTerm" type="text" name="term" placeholder="Search Term">
+      <input id="searchTerm" type="text" name="term" placeholder="Name of anime">
       <input type="submit" value="Search">
     </form>
-    <form id="characterForm" action="/character" method="get">
-      <!-- since this has the name attribute set to "character" the server will receive
+    <!--<form id="characterForm" action="/character" method="get">
+       since this has the name attribute set to "character" the server will receive
            the string character=value (value being what the user typed in)
-      -->
+      
       <input id="characterName" type="text" name="character" placeholder="Character Name">
       <input type="submit" value="Search Character">
-    </form>
+    </form>-->
   </div>
   <div id="result">
     

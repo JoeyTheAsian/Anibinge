@@ -34,10 +34,10 @@ function onRequest(req, res) {
   if(parsedUrl.pathname === "/animeSearch") {
     animeSearch(req, res, params);
   }
-  //if web page asked for /character (assuming ajax request)
+  /*//if web page asked for /character (assuming ajax request)
   else if(parsedUrl.pathname === "/character") {
     characterSearch(req, res, params);
-  }
+  }*/
   //ALL other requests send back the main page
   else {
     //set 200 (okay) status for success
@@ -52,22 +52,6 @@ function onRequest(req, res) {
 
 //function to do an anime search to the anilist API for us
 function animeSearch(req, res, params) {
-  /**
-    URL structure according to anlist documentation
-    {anime or manga}/search/searchTerm
-    /anime/search/term
-    /manga/search/term
-    
-    example:
-    /anime/search/ghost
-    /manga/search/ghost
-  **/
-  
-  //use the nani api to call anime/search/ and then the search
-  //term. This is from the API documentation.
-  //On success this will call the .then function
-  //On failure this will call the .catch function
-  //we just chain the then and catch functions onto
   //the nani call
   nani.get('anime/search/' + params.term)
   .then(function(data) {
