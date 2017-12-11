@@ -28,11 +28,10 @@
     }
     
     #result {
-      width: 60%;
+      width: 85%;
       margin: auto;
       word-wrap: normal;
       align-content: center;
-        
     }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -43,6 +42,7 @@
       $("#searchForm").submit(function(e){
         //grab the forms action attribute so we know where to submit to
         var action = $("#searchForm").attr("action");
+        console.dir(action);
         //grab the search term value and encode it to be valid
         //for queryParameters using the encodeURIComponent
         //method. This will replace special characters (such as spaces) 
@@ -67,30 +67,39 @@
           //assume a JSON response from the server, so jquery knows how
           //to parse the response.
           dataType: "json",
+          foundAnime: false,
+          anime: null,
           //on success from server
           //Gets result as the server response
           //status as the status code from the server
           //and xhr as the xhr object it created behind the scenes
           success: function (result, status, xhr) {
-            console.dir(result);
+            //console.dir(result);
               //if we only get one anime back
             if(result.length == 1 && !result.error){
                 $("#result").text("");
                 var header = document.createElement("h2");
-                header.textContent = "Got it, you're watching this, right? ";
+                var image = document.createElement("img");
+                header.textContent = "Got it, you're watching this, right?";
                 
                 //construct div with anime title and info
                 var div = document.createElement("div");
                 div.id = "entry" + 0;
-                div.style = "background-color: #cecece; padding: 5px;"
+                div.style = "background-color: #cecece; align-content:center; text-align:center; width: 200px; height:250px; display:inline-block;text-shadow:2px 2px #FFFFFF; overflow:scroll;"
+                
                 var text = document.createElement("p");
+                var image = document.createElement("img");
+                anime = result[0];
                 //if it has matching english & romaji titles
                 if(result[0].title_romaji == result[0].title_english){
-                        text.textContent = "Title: " + result[0].title_romaji;
-                        
+                    image.src = result[0].image_url_med;
+                    div.appendChild(image);
+                    text.textContent = "Title: " + result[0].title_romaji;
                 }else{
                     text.textContent = "Romaji Title: " + result[0].title_romaji;
                     var text1 = document.createElement("p");
+                    image.src = result[0].image_url_med;
+                    div.appendChild(image);
                     text1.textContent = "English Title: " + result[0].title_english;
                     div.appendChild(text1);
                 }
@@ -102,6 +111,65 @@
                 var header1 = document.createElement("h2");
                 header1.textContent = "We'll get you some similar anime to binge on right away."
                 $("#result").append(header1);
+            
+               //browse for similar titles
+                var action1 = "/browse";
+                
+                var year = (result[0].season + "").substr(0,2);   
+                if(parseInt(year)< 60){
+                    year = "year=20" + year;
+                }else{
+                    year = "year=19" + year;
+                }
+                
+                var genres = "genres=" + encodeURIComponent(result[0].genres.toString());
+                var sort = "&sort=" + encodeURIComponent("start_date-desc");
+                var data1 = genres +  sort;
+                console.dir(data1);
+                $.ajax({
+                  cache: false,
+                  type: "get",
+                  url: action1,
+                  data: data1,
+                  dataType: "json",
+                  success: function (result, status, xhr) {
+                    console.dir(result);
+                    //convert to string we can see on screen
+                    var header1 = document.createElement("h2");
+                    header1.textContent = "Here are our recommendations"
+                    $("#result").append(header1);
+                    for(var i = 0; i < result.length ;i++){
+                        var div = document.createElement("div");
+                        div.id = "entry" + i;
+                        div.style = "background-color: #cecece; align-content:center; text-align:center; width: 200px; height:250px; display:inline-block;text-shadow:2px 2px #FFFFFF; overflow:scroll;"
+                        var text = document.createElement("p");
+                        var image = document.createElement("img");
+                        if(result[i].title_romaji == result[i].title_english){
+                            text.textContent = result[i].title_romaji;
+                            image.src = result[i].image_url_med;
+                            div.appendChild(image);
+                            div.appendChild(text);
+                        }else{
+                            //console.dir(result[i]);
+                            text.textContent = "Romaji Title: " + result[i].title_romaji;
+
+                            var text1 = document.createElement("p");
+                            text1.textContent = "English Title: " + result[i].title_english;
+
+                            image.src = result[i].image_url_med;
+                            div.appendChild(image);
+                            div.appendChild(text1);
+                            div.appendChild(text);
+                        }
+
+                        $("#result").append(div);
+                    }
+                  },
+                  error: function (error, status, xhr) {
+                    var resultText = JSON.stringify(error);
+                    $("#result").text(resultText);
+                  }
+                });
                 
             //if we get more than one anime back
             }else if(result.length > 1){
@@ -114,23 +182,25 @@
                 for(var i = 0; i < result.length ;i++){
                     var div = document.createElement("div");
                     div.id = "entry" + i;
-                    div.style = "background-color: #cecece; align-content:center; text-align:center; width: 120px; height:250px; display:inline-block;text-shadow:2px 2px #FFFFFF;"
+                    div.style = "background-color: #cecece; align-content:center; text-align:center; width: 200px; height:250px; display:inline-block;text-shadow:2px 2px #FFFFFF; overflow:scroll;"
                     var text = document.createElement("p");
                     var image = document.createElement("img");
                     if(result[i].title_romaji == result[i].title_english){
                         text.textContent = result[i].title_romaji;
                         image.src = result[i].image_url_med;
-                        
-                        div.appendChild(text);
                         div.appendChild(image);
-                        
-                    }else{
-                        text.textContent = "Romaji Title: " + result[i].title_romaji;
                         div.appendChild(text);
+                    }else{
+                        //console.dir(result[i]);
+                        text.textContent = "Romaji Title: " + result[i].title_romaji;
+                        
                         var text1 = document.createElement("p");
                         text1.textContent = "English Title: " + result[i].title_english;
-                        text1.textContent = "English Title: " + result[i].title_english;
+                        
+                        image.src = result[i].image_url_med;
+                        div.appendChild(image);
                         div.appendChild(text1);
+                        div.appendChild(text);
                     }
                     
                     $("#result").append(div);
@@ -145,7 +215,7 @@
                         var header1 = document.createElement("h2");
                         header1.textContent = "We'll get you some similar anime to binge on right away..."
                         $("#result").append(header1);
-                    }
+                    };
                 }
             }else if(result.error.status == 200){
                 console.dir('error');
@@ -159,11 +229,6 @@
                 header1.textContent = "Try checking the spelling or using different search terms.";
                 $("#result").append(header1);
             }
-            //convert to string we can see on screen
-            //var resultText = JSON.stringify(result);
-            
-            //add the raw json object to the screen for us to see.
-            //$("#result").text(resultText);
           },
           //on error from server
           //Gets error as the server response
@@ -176,9 +241,6 @@
             $("#result").text(resultText);
           }
         });
-        
-        //NEED TO CANCEL THE BROWSER'S DEFAULT FORM ACTION
-        //e.preventDefault will stop it from doing the request
         e.preventDefault();
         //return false will stop it from trying to change page
         //to the action URL.
@@ -216,7 +278,6 @@
         //to the action URL.
         return false;
       });
-      
     });
   </script>
 </head>
@@ -249,7 +310,7 @@
       
       Forms are submitted with the submit button or enter key 
     -->
-      <p>What are you watching now?</p>
+    <p>What are you watching now?</p>
     <form id="searchForm" action="/animeSearch" method="get">
       <!-- since this has the name attribute set to "term" the server will receive
            the string term=value (value being what the user typed in)

@@ -34,6 +34,10 @@ function onRequest(req, res) {
   if(parsedUrl.pathname === "/animeSearch") {
     animeSearch(req, res, params);
   }
+  else if(parsedUrl.pathname === "/browse") {
+    
+    browse(req, res, params);
+  }
   /*//if web page asked for /character (assuming ajax request)
   else if(parsedUrl.pathname === "/character") {
     characterSearch(req, res, params);
@@ -49,7 +53,21 @@ function onRequest(req, res) {
     res.end();
   }
 }
-
+function browse(req, res, params) {
+  //the nani call
+  nani.get('browse/anime?' + params.term)
+  .then(function(data) {
+    res.writeHead(200, { "Content-Type" : "application/json"});
+    res.write(JSON.stringify(data));
+    res.end();
+  })
+  .catch(function(err) {
+    console.dir(err); 
+    res.writeHead(400, { "Content-Type" : "application/json"});
+    res.write(JSON.stringify(err));
+    res.end();
+  });
+}
 //function to do an anime search to the anilist API for us
 function animeSearch(req, res, params) {
   //the nani call
