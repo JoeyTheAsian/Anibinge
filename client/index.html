@@ -141,6 +141,7 @@
                     for(var i = 0; i < result.length ;i++){
                         var div = document.createElement("div");
                         div.id = "entry" + i;
+                        $("#entry" + i).hide();
                         div.style = "background-color: #cecece; align-content:center; text-align:center; width: 200px; height:250px; display:inline-block;text-shadow:2px 2px #FFFFFF; overflow:scroll;"
                         var text = document.createElement("p");
                         var image = document.createElement("img");
@@ -163,6 +164,7 @@
                         }
 
                         $("#result").append(div);
+                        $("#entry" + i).fadein(1.0f);
                     }
                   },
                   error: function (error, status, xhr) {
@@ -268,7 +270,7 @@
           },
           error: function (error, status, xhr) {
             var resultText = JSON.stringify(error);
-            $("#result").text(resultText);
+            $("#result").text(resultText);  
           }
         });
         
